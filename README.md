@@ -1,2 +1,2 @@
 # autoedgetrigger
-Automatic Edgertronic trigger from Stalker Radar serial RS-232 readout.
+Basics in reading in Stalker Radar data using an FTDI USB-Serial cable.
