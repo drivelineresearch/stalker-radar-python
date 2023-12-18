@@ -1,19 +1,34 @@
-import serial
 import time
+import serial
+import logging
+from datetime import datetime
 
-serialPort = serial.Serial(
-    port="COM9", baudrate=9600, bytesize=8, timeout=2, stopbits=serial.STOPBITS_ONE
-)
-serialString = ""  # Used to hold data coming over UART
-while 1:
-    # Wait until there is data waiting in the serial buffer
-    if serialPort.in_waiting > 0:
+# Constants
+SERIAL_PORT = '/dev/ttyUSB0' # typical FTDI interface name
+LOG_FILE = '/path/to/logfile.log'  # Replace with your desired log file path
 
-        # Read data out of the buffer until a carraige return / new line is found
-        serialString = serialPort.readline()
+# Set up logging
+logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format='%(asctime)s %(message)s')
 
-        # Print the contents of the serial data
+# Function to read data from serial port
+def read_serial_data(ser):
+    if not ser.isOpen():
+        ser.open()
+    ser_bytes = ser.readline()
+    return ser_bytes.decode('utf-8', 'ignore').strip()
+
+# Main loop
+def main():
+    ser = serial.Serial(SERIAL_PORT)
+    while True:
         try:
-            print(serialString.decode("Ascii"))
-        except:
-            pass
+            data = read_serial_data(ser)
+            if data:
+                logging.info(f"Data: {data}")
+                print(f"Data: {data}")
+        except Exception as e:
+            logging.error(f"Error: {e}")
+            time.sleep(1)  # Delay to prevent rapid error logging in case of continuous failure
+
+if __name__ == "__main__":
+    main()
