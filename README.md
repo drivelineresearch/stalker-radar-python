@@ -1,7 +1,7 @@
 # Serial Port Data Logger
 
 ## Introduction
-This project provides a Python script for reading data from a serial port and logging it to a file. It's particularly useful for applications involving data acquisition from serial devices like sensors, modems, etc.
+This project provides a Python script for reading data from a serial port - typically Stalker Radar guns using an FTDI USB-Serial cable.
 
 ## Features
 - Reads data from a specified serial port.
